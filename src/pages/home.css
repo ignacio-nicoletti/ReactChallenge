@@ -1,0 +1,68 @@
+.containHome {
+  width: 1024px;
+  height: 768px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 1%;
+  color: white;
+  font-size: 2rem;
+  background-color: rgb(50, 205, 50);
+  height: 10vh;
+}
+
+.titles {
+  text-align: center;
+  color: rgb(0, 48, 81);
+}
+
+.containCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-inline: 15%;
+  /* gap: 10px;  */
+  /* max-width: 1024px;  */
+  /* display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: auto;
+  */
+}
+
+.button {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid gray;
+  margin-top: 5%;
+}
+.button button {
+  margin-left: 1%;
+  height: fit-content;
+  padding: 2%;
+  color: white;
+  background-color: rgb(50, 205, 50);
+  border-radius: 10%;
+  border: none;
+}
+
+.button button:hover {
+  cursor: pointer;
+}
+
+.ButtonOpcion {
+  display: flex;
+  align-items: center;
+  color: white;
+  justify-content: center;
+  background-color: rgb(50, 205, 50);
+  border-radius: 10%;
+  text-align: center;
+  padding-inline: 5%;
+  /* width: 150px; */
+}
+.ButtonOpcion:hover{
+  cursor: pointer;
+}
