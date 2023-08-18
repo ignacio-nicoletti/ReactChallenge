@@ -1,7 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import './detail.css';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import "./detail.css";
+import FetchData from "../../Fetch/FetchData";
 
 interface Account {
   n: string;
@@ -13,44 +14,45 @@ interface Account {
 const DetailCard: React.FC = () => {
   const [detail, setDetail] = useState<Account | null>(null);
 
-  const { id } = useParams<{ id: string }>(); //obtengo un numero de cuenta corriente como id 
+  const { id } = useParams<{ id: string }>(); //obtengo un numero de cuenta corriente como id
 
   useEffect(() => {
-    axios.get('https://api.npoint.io/97d89162575a9d816661').then(response => { //consumo la api y filtro la cuenta por ese id. Esto podria mejorarse usando React-Redux
-      const cuentas: Account[] = response.data.cuentas;
-
-      const filteredAccounts = cuentas.filter(el => el.n === id);
-      setDetail(filteredAccounts.length > 0 ? filteredAccounts[0] : null);
-    });
+    CallApi();
   }, [id]);
+
+  const CallApi = async () => {
+    const data = await FetchData();//tare la data y la filtra por ese Id/numero de cuenta
+    const filteredAccounts = data.cuentas.filter((el: any) => el.n === id);
+    setDetail(filteredAccounts.length > 0 ? filteredAccounts[0] : null);
+  };
 
   return (
     <div className="contain">
-      <div className='navbar'>
+      <div className="navbar">
         <p>NCR</p>
       </div>
-      <div className='titles'>
+      <div className="titles">
         <p>Consulta de Saldo</p>
         <h2>Este es tu saldo actual</h2>
       </div>
       {detail ? (
-        <div className='informacion'>
+        <div className="informacion">
           <p>Saldo de la cuenta: {Number(detail.saldo)}</p>
           <p>
             Tipo de cuenta:
-            {detail.tipo_letras === 'CC'
-              ? ' Cuenta Corriente'
-              : ' Caja de Ahorro'}{' '}
-            en {detail.moneda === '$' ? 'Pesos' : 'Dolares'}
+            {detail.tipo_letras === "CC"
+              ? " Cuenta Corriente"
+              : " Caja de Ahorro"}{" "}
+            en {detail.moneda === "$" ? "Pesos" : "Dolares"}
           </p>
           <p>Numero de la cuenta: {detail.n}</p>
         </div>
       ) : (
         <p>loading</p>
       )}
-      <div className='button'>
+      <div className="button">
         <Link to={`/`}>
-          <button className='buttonGreen'>Salir</button>
+          <button className="buttonGreen">Salir</button>
         </Link>
       </div>
     </div>

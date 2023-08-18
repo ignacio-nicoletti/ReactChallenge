@@ -8,9 +8,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" Component={Home} />
-        
-        <Route  path="/:id" Component={DetailCard} />
+        <Route path="/" Component={Home} />
+
+        <Route path="/:id" Component={DetailCard} />
       </Routes>
     </>
   );

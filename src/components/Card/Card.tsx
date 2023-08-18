@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./card.css";
+
 interface Props {
   numeroCuenta: string;
-
   tipoDeCuentas: string;
 }
 

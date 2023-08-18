@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../components/Card/Card";
 import "./home.css";
+import FetchData from "../Fetch/FetchData";
 
 interface DataObject {
   cuentas: Cuenta[];
@@ -14,24 +15,26 @@ interface Cuenta {
 }
 
 const Home: React.FC = () => {
-  const apiUrl: any = process.env.REACT_APP_API_URL; //url de la api 
-
-  const [data, setData] = useState<DataObject | null>(null);  // guardo la data completa 
-  const [datasplice, setDatasplice] = useState<Cuenta[]>([]); //guardo la data cortada cada 5
+  const [data, setData] = useState<DataObject | null>(null); // guardo la data completa
+  const [dataSplice, setDataSplice] = useState<Cuenta[]>([]); //guardo la data cortada cada 5
   const [pagina, setPagina] = useState(0);
   const cant = 5;
 
   useEffect(() => {
-    axios.get(apiUrl).then((response) => {
-      setData(response.data);
-    }); //se monta el componente y consume la api guardandola en un estado local 
+ CallApi();
   }, []);
 
+  const CallApi = async () => {
+    const data =await FetchData();
+    setData(data);
+  };
+  
   useEffect(() => {
     if (data) {
       const startIndex = pagina * cant;
       const endIndex = startIndex + cant;
-      setDatasplice(
+      
+      setDataSplice(
         data.cuentas
           .filter(
             (el: Cuenta) =>
@@ -66,16 +69,21 @@ const Home: React.FC = () => {
             <p>« Opciones anteriores</p>
           </div>
         )}
-        {datasplice.length > 0 ? (
-          datasplice.map((el: Cuenta, index: number) => (// si hay informacion renderizame el componente 
-            <Card
-              key={index}
-              numeroCuenta={el.n}
-              tipoDeCuentas={el.tipo_letras}
-            />
-          ))
+        {dataSplice.length > 0 ? (
+          dataSplice.map(
+            (
+              el: Cuenta,
+              index: number // si hay informacion renderizame el componente
+            ) => (
+              <Card
+                key={index}
+                numeroCuenta={el.n}
+                tipoDeCuentas={el.tipo_letras}
+              />
+            )
+          )
         ) : (
-          <p>Loading...</p> //sino cargando 
+          <p>Loading...</p> //sino cargando
         )}
         <div className="ButtonOpcion" onClick={handlerPlus}>
           <p>Mas Opciones »</p>
